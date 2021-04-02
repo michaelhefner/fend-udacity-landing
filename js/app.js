@@ -25,13 +25,15 @@ const toggleNav = () => {
   toggleHamburgerAnimation(navToggle);
 
 };
+
+let sectionList = [{id:"section1", content: "Section 1"}, {id:"section2", content: "Section 2"},{id: "section3", content: "Section 3"}]
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("hamburger").addEventListener("click", toggleHamburgerAnimation);
   createElement(document, "header", {
     tag: "nav",
     id: "navbar",
     style: [
-      { name: "backgroundColor", value: "#4524D6" },
+      { name: "backgroundColor", value: "#1d048b" },
       { name: "width", value: "100vw" },
       { name: "alignSelf", value: "flex-end" },
       { name: "marginTop", value: "auto" },
@@ -49,20 +51,20 @@ document.addEventListener("DOMContentLoaded", () => {
     ],
   });
 
-  for (let index of ["section1", "section2", "section3"]) {
+  for (let index of sectionList) {
     createElement(document, "ul", {
       tag: "li",
-      id: `li-${index}`,
+      id: `li-${index.id}`,
       style: [
         { name: "width", value: "100%" },
         { name: "textAlign", value: "center" },
         { name: "margin", value: "10px 0" },
       ],
     });
-    createElement(document, `#li-${index}`, {
+    createElement(document, `#li-${index.id}`, {
       tag: "a",
-      content: index,
-      href: `#${index}`,
+      content: index.content,
+      href: `#${index.id}`,
       click: toggleNav,
       style: [
         { name: "width", value: "100%" },
@@ -74,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     createElement(document, "main", {
       tag: "section",
-      id: index,
+      id: index.id,
       style: [
         { name: "width", value: "100%" },
         { name: "minHeight", value: "30vh" },
