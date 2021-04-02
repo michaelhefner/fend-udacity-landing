@@ -1,23 +1,41 @@
+/**************************************
+Clear brower padding
+**************************************/
+
 * {
   padding: 0;
   margin: 0;
   max-width: 100%;
 }
+
+/**************************************
+Global
+**************************************/
+
 body {
   min-height: 100vh;
 }
 main {
   padding: 10vh 0;
 }
+ul {
+  list-style: none;
+}
+
+/**************************************
+Header
+**************************************/
+
 header {
   position: fixed;
   min-height: 10vh;
-  background: #4524d6;
+  background: #1d048b;
   display: flex;
   flex-direction: column;
   color: #fff;
   width: 100%;
   justify-content: center;
+  padding-bottom: 10px;
 }
 header article {
   display: flex;
@@ -25,9 +43,18 @@ header article {
   justify-content: space-between;
   align-items: center;
 }
+nav a:hover, a:active {
+  background-color: #2103a785;
+} 
+
+
+/**************************************
+Footer
+**************************************/
+
 footer {
   position: fixed;
-  display: flex;
+  display: fl ex;
   flex-direction: column;
   justify-content: center;
   bottom: 0;
@@ -37,12 +64,20 @@ footer {
 footer p {
   text-align: center;
 }
+
+/**************************************
+Body
+**************************************/
+
 section:nth-child(odd) {
   background-color: #d4ddf7;
 }
-ul {
-  list-style: none;
-}
+
+
+/**************************************
+Hamburger
+**************************************/
+
 #hamburger {
   display: flex;
   flex-direction: column;
@@ -106,3 +141,7 @@ ul {
     transform: translateY(15px) translateX(-3px) rotate(225deg);
   }
 }
+
+/**************************************
+End Hamburger
+**************************************/
