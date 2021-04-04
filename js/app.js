@@ -1,53 +1,128 @@
-import toggleHamburgerAnimation from './hamburger.js';
+/**************************************
+ * Import Statements
+ *************************************/
+import toggleHamburgerAnimation from "./hamburger.js";
+import createElement from "./createElement.js";
 
-const createElement = (doc, parent, docData) => {
-  const newElement = doc.createElement(docData.tag);
-  if (docData.style) {
-    docData.style.forEach((element) => {
-      newElement.style[element.name] = element.value;
-    });
-  }
-  if (docData.href) {
-    newElement.setAttribute("href", docData.href);
-  }
-  if (docData.id) newElement.setAttribute("id", docData.id);
-  newElement.addEventListener("click", docData.click);
-  newElement.innerText = docData.content || "";
-  document.querySelector(parent).appendChild(newElement);
-};
+/**************************************
+ * Initialize variables
+ *************************************/
 let navToggle = false;
 
+const sectionList = [
+  { id: "section1", content: "Section 1" },
+  { id: "section2", content: "Section 2" },
+  { id: "section3", content: "Section 3" },
+];
+
+/**************************************
+ * Toggle Navbar Visibility
+ *************************************/
 const toggleNav = () => {
   const navbar = document.getElementById("navbar");
   console.log(navToggle);
   navToggle = !navToggle;
   navToggle ? (navbar.style.display = "flex") : (navbar.style.display = "none");
   toggleHamburgerAnimation(navToggle);
-
 };
 
-let sectionList = [{id:"section1", content: "Section 1"}, {id:"section2", content: "Section 2"},{id: "section3", content: "Section 3"}]
+/**************************************
+ * Add Section helper class Nav list
+ * item and create section in main
+ * content
+ *************************************/
+const addSection = () => {
+  
+  /**************************************
+   * Get nav list item count
+   *************************************/
+  const sectionCount = document.getElementsByTagName("li").length;
+
+  /**************************************
+   * Create DOM elements on initial load
+   * using the createElement module
+   *************************************/
+  createElement(document, "ul", {
+    tag: "li",
+    id: `li-section${sectionCount}`,
+    style: [{ width: "100%" }, { textAlign: "center" }, { margin: "10px 0" }],
+  });
+  createElement(document, `#li-section${sectionCount}`, {
+    tag: "a",
+    content: `Section ${sectionCount}`,
+    href: `#section${sectionCount}`,
+    click: toggleNav,
+    style: [
+      { width: "100%" },
+      { height: "100%" },
+      { padding: "10px 0" },
+      { display: "block" },
+      { color: "white" },
+    ],
+  });
+  createElement(document, "main", {
+    tag: "section",
+    id: `section${sectionCount}`,
+    style: [
+      { width: "100%" },
+      { minHeight: "30vh" },
+      { padding: "25px 0" },
+      { maxWidth: "100%" },
+    ],
+  });
+};
+
+/**************************************
+ * Wait for DOM to be loaded
+ *************************************/
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("hamburger").addEventListener("click", toggleHamburgerAnimation);
+  /**************************************
+   * Hamburger for nav visibility toggle
+   *************************************/
+  document
+    .getElementById("hamburger")
+    .addEventListener("click", toggleHamburgerAnimation);
+
+  /**************************************
+   * Create DOM elements on initial load
+   * using the createElement module
+   *************************************/
   createElement(document, "header", {
     tag: "nav",
     id: "navbar",
     style: [
-      { name: "backgroundColor", value: "#1d048b" },
-      { name: "width", value: "100vw" },
-      { name: "alignSelf", value: "flex-end" },
-      { name: "marginTop", value: "auto" },
-      { name: "display", value: "none" },
+      { backgroundColor: "#1d048b" },
+      { width: "100vw" },
+      { alignSelf: "flex-end" },
+      { marginTop: "auto" },
+      { display: "none" },
     ],
   });
 
   createElement(document, "nav", {
     tag: "ul",
     style: [
-      { name: "display", value: "flex" },
-      { name: "flexDirection", value: "column" },
-      { name: "width", value: "100%" },
-      { name: "justifyContent", value: "space-around" },
+      { display: "flex" },
+      { flexDirection: "column" },
+      { width: "100%" },
+      { justifyContent: "space-around" },
+    ],
+  });
+  createElement(document, "ul", {
+    tag: "li",
+    id: "add-section",
+    style: [{ width: "100%" }, { textAlign: "center" }, { margin: "10px 0" }],
+  });
+  createElement(document, `#add-section`, {
+    tag: "button",
+    content: "Add Section",
+    click: addSection,
+    style: [
+      { width: "100%" },
+      { height: "100%" },
+      { padding: "10px 0" },
+      { display: "block" },
+      { color: "white" },
     ],
   });
 
@@ -55,11 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
     createElement(document, "ul", {
       tag: "li",
       id: `li-${index.id}`,
-      style: [
-        { name: "width", value: "100%" },
-        { name: "textAlign", value: "center" },
-        { name: "margin", value: "10px 0" },
-      ],
+      style: [{ width: "100%" }, { textAlign: "center" }, { margin: "10px 0" }],
     });
     createElement(document, `#li-${index.id}`, {
       tag: "a",
@@ -67,21 +138,21 @@ document.addEventListener("DOMContentLoaded", () => {
       href: `#${index.id}`,
       click: toggleNav,
       style: [
-        { name: "width", value: "100%" },
-        { name: "height", value: "100%" },
-        { name: "padding", value: "10px 0" },
-        { name: "display", value: "block" },
-        { name: "color", value: "white" },
+        { width: "100%" },
+        { height: "100%" },
+        { padding: "10px 0" },
+        { display: "block" },
+        { color: "white" },
       ],
     });
     createElement(document, "main", {
       tag: "section",
       id: index.id,
       style: [
-        { name: "width", value: "100%" },
-        { name: "minHeight", value: "30vh" },
-        { name: "padding", value: "25px 0" },
-        { name: "maxWidth", value: "100%" },
+        { width: "100%" },
+        { minHeight: "30vh" },
+        { padding: "25px 0" },
+        { maxWidth: "100%" },
       ],
     });
   }
