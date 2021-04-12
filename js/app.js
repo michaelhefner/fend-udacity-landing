@@ -1,12 +1,14 @@
 /**************************************
  * Import Statements
  *************************************/
+
 import toggleHamburgerAnimation from "./hamburger.js";
 import createElement from "./createElement.js";
 
 /**************************************
  * Initialize variables
  *************************************/
+
 let navToggle = false;
 
 const sectionList = [
@@ -70,6 +72,7 @@ const ulStyle = [
 /**************************************
  * Toggle Navbar Visibility
  *************************************/
+
 const toggleNav = () => {
   const navbar = document.getElementById("navbar");
   navToggle = !navToggle;
@@ -86,6 +89,7 @@ const addSection = () => {
   /**************************************
    * Get nav list item count
    *************************************/
+
   const sectionCount = document.getElementsByTagName("li").length;
   sectionStyle.push({
     backgroundColor: colors[sectionCount > 4 ? sectionCount - 4 : sectionCount],
@@ -95,6 +99,7 @@ const addSection = () => {
    * Create DOM elements on initial load
    * using the createElement module
    *************************************/
+
   createElement(document, "ul", {
     tag: "li",
     id: `li-section${sectionCount}`,
@@ -136,14 +141,15 @@ const showTimer = (timeout) => {
   hideTimer(timeout);
 };
 
-
 /**************************************
  * Wait for DOM to be loaded
  *************************************/
+
 document.addEventListener("DOMContentLoaded", () => {
   /**************************************
    * Start scroll listeners
    *************************************/
+
   function scrollStart() {
     showTimer(6000);
   }
@@ -156,14 +162,14 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("scrollEnd", scrollEnd);
   document.addEventListener("scroll", scrollStart);
   document.addEventListener("click", scrollStart);
-  document.addEventListener("mousemove", event => event.clientY < 200 ? scrollStart() : null);
-  /**************************************
-   * End scroll listener
-   *************************************/
+  document.addEventListener("mousemove", (event) =>
+    event.clientY < 200 ? scrollStart() : null
+  );
 
   /**************************************
    * Hamburger for nav visibility toggle
    *************************************/
+
   document
     .getElementById("hamburger")
     .addEventListener("click", toggleHamburgerAnimation);
@@ -172,6 +178,7 @@ document.addEventListener("DOMContentLoaded", () => {
    * Create DOM elements on initial load
    * using the createElement module
    *************************************/
+
   createElement(document, "header", {
     tag: "nav",
     id: "navbar",
