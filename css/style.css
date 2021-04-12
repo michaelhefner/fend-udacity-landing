@@ -46,10 +46,18 @@ nav a:hover, nav a:active {
   color: #fff;
 } 
 
+li {
+  display: flex;
+}
+
 li a {
   text-decoration: none;
 }
 
+.active {
+  background-color: #4644f0;
+  color: white;
+}
 /**************************************
 *Footer
 **************************************/

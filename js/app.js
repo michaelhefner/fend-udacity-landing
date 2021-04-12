@@ -34,14 +34,14 @@ const sectionStyle = [
   { maxWidth: "100%" },
 ];
 
-const liStyle = [{ width: "100%" }, { textAlign: "center" }];
-
-const aStyle = [
+const liStyle = [
   { width: "100%" },
-  { height: "100%" },
+  { textAlign: "center" },
+  { display: "flex" },
   { padding: "10px 0" },
-  { display: "block" },
 ];
+
+const aStyle = [{ width: "100vw" }, { padding: "10px 0px" }, { flex: 1 }];
 
 const buttonStyle = [
   { margin: "auto" },
@@ -142,6 +142,25 @@ const showTimer = (timeout) => {
 };
 
 /**************************************
+ * Set active section
+ *************************************/
+
+const setSectionActive = (element) => {
+  const elements = document.getElementsByTagName("li");
+  for (let li of elements) {
+    console.log(li)
+    li.childNodes[0].classList.remove("active");
+  }
+  element.classList.add("active");
+};
+
+const liClickHandler = (event) => {
+  toggleNav();
+  console.log(event.target);
+  setSectionActive(event.target);
+};
+
+/**************************************
  * Wait for DOM to be loaded
  *************************************/
 
@@ -151,11 +170,11 @@ document.addEventListener("DOMContentLoaded", () => {
    *************************************/
 
   function scrollStart() {
-    showTimer(6000);
+    showTimer(60000);
   }
 
   function scrollEnd() {
-    hideTimer(2000);
+    hideTimer(20000);
   }
 
   document.addEventListener("scrollStart", scrollStart);
@@ -217,7 +236,7 @@ document.addEventListener("DOMContentLoaded", () => {
       tag: "a",
       content: index.content,
       href: `#${index.id}`,
-      click: toggleNav,
+      click: liClickHandler,
       style: aStyle,
     });
 
