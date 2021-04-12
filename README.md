@@ -1,6 +1,6 @@
 # fend-udacity-landing
 ## Contents
-    ### A dynamic main navbar that has a toggle hamburger.
+    1 A dynamic main navbar that has a toggle hamburger.
         - An "Add Section" button to add additional sections to the page with default content.
-    ### Mobile first design.
-    ### Static footer.
+    2 Mobile first design.
+    3 Static footer.
