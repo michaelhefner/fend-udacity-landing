@@ -3,7 +3,6 @@
  *************************************/
 import toggleHamburgerAnimation from "./hamburger.js";
 import createElement from "./createElement.js";
-import swipeListener from "./swipe.js";
 
 /**************************************
  * Initialize variables
@@ -73,7 +72,6 @@ const ulStyle = [
  *************************************/
 const toggleNav = () => {
   const navbar = document.getElementById("navbar");
-  console.log(navToggle);
   navToggle = !navToggle;
   navToggle ? (navbar.style.display = "flex") : (navbar.style.display = "none");
   toggleHamburgerAnimation(navToggle);
@@ -127,7 +125,6 @@ const addSection = () => {
 
 const hideTimer = (timeout) => {
   setTimeout(() => {
-    console.log("hideNav");
     document.getElementsByTagName("header")[0].style.opacity = "0";
     document.getElementsByTagName("footer")[0].style.opacity = "0";
   }, timeout);
@@ -138,6 +135,8 @@ const showTimer = (timeout) => {
   document.getElementsByTagName("footer")[0].style.opacity = "1";
   hideTimer(timeout);
 };
+
+
 /**************************************
  * Wait for DOM to be loaded
  *************************************/
@@ -146,7 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
    * Start scroll listeners
    *************************************/
   function scrollStart() {
-    showTimer(3000);
+    showTimer(6000);
   }
 
   function scrollEnd() {
@@ -155,9 +154,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener("scrollStart", scrollStart);
   document.addEventListener("scrollEnd", scrollEnd);
-
   document.addEventListener("scroll", scrollStart);
-
+  document.addEventListener("click", scrollStart);
+  document.addEventListener("mousemove", event => event.clientY < 200 ? scrollStart() : null);
   /**************************************
    * End scroll listener
    *************************************/
