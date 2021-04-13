@@ -17,6 +17,8 @@ const sectionList = [
   { id: "section3", content: "Section 3" },
 ];
 
+let activeSection = "section1";
+
 const colors = ["#DEBDA6", "#D0DEA6", "#DFCCBE", "#A6D9DE", "#D0B1DE"];
 const defaultContent =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
@@ -81,83 +83,20 @@ const toggleNav = () => {
 };
 
 /**************************************
- * Add Section helper class Nav list
- * item and create section in main
- * content
- *************************************/
-const addSection = () => {
-  /**************************************
-   * Get nav list item count
-   *************************************/
-
-  const sectionCount = document.getElementsByTagName("li").length;
-  sectionStyle.push({
-    backgroundColor: colors[sectionCount > 4 ? sectionCount - 4 : sectionCount],
-  });
-
-  /**************************************
-   * Create DOM elements on initial load
-   * using the createElement module
-   *************************************/
-
-  createElement(document, "ul", {
-    tag: "li",
-    id: `li-section${sectionCount}`,
-    style: liStyle,
-  });
-  createElement(document, `#li-section${sectionCount}`, {
-    tag: "a",
-    content: `Section ${sectionCount}`,
-    href: `#section${sectionCount}`,
-    click: toggleNav,
-    style: aStyle,
-  });
-  createElement(document, "main", {
-    tag: "section",
-    id: `section${sectionCount}`,
-    style: sectionStyle,
-  });
-
-  createElement(document, `#section${sectionCount}`, {
-    tag: "p",
-    content: defaultContent,
-  });
-};
-
-/**************************************
  * Show / Hide Header and Footer
  *************************************/
-
-const hideTimer = (timeout) => {
-  setTimeout(() => {
+let timer;
+const hideTimer = () =>
+  (timer = setTimeout(() => {
     document.getElementsByTagName("header")[0].style.opacity = "0";
     document.getElementsByTagName("footer")[0].style.opacity = "0";
-  }, timeout);
-};
+  }, 6000));
 
-const showTimer = (timeout) => {
+const showElements = (timeout) => {
+  clearTimeout(timer);
   document.getElementsByTagName("header")[0].style.opacity = "1";
   document.getElementsByTagName("footer")[0].style.opacity = "1";
   hideTimer(timeout);
-};
-
-/**************************************
- * Set active section
- *************************************/
-
-const setSectionActive = (element) => {
-  const elements = document.getElementsByTagName("li");
-  for (let li of elements) {
-    console.log(li)
-    li.childNodes[0].classList.remove("active");
-  }
-  element.classList.add("active");
-};
-
-const liClickHandler = (event) => {
-  toggleNav();
-  console.log(event.target);
-  setSectionActive(event.target);
 };
 
 /**************************************
@@ -169,21 +108,55 @@ document.addEventListener("DOMContentLoaded", () => {
    * Start scroll listeners
    *************************************/
 
-  function scrollStart() {
-    showTimer(60000);
+  function updateSection(e) {
+    startShowTimer();
+    const sections = document.getElementsByTagName("section");
+    const currentY = e.target && e.target.scrollingElement ? e.target.scrollingElement.scrollTop : 0;
+    for (let i = 0; i < sections.length; ++i) {
+      const start =
+        (sections[i].scrollHeight * (i + 1) - sections[i].scrollHeight) * 0.825;
+      const end = sections[i].scrollHeight * (i + 1) * 0.825;
+      if (currentY > start && currentY < end) {
+        document.getElementById("section-display").innerHTML =
+          sectionList[i].content;
+        setSectionActive(document.getElementById(`li-${sectionList[i].id}`).childNodes[0]);
+      }
+    }
+  }
+  function startShowTimer() {
+    showElements(6000);
   }
 
-  function scrollEnd() {
-    hideTimer(20000);
+  function startHideTimer() {
+    hideTimer();
   }
-
-  document.addEventListener("scrollStart", scrollStart);
-  document.addEventListener("scrollEnd", scrollEnd);
-  document.addEventListener("scroll", scrollStart);
-  document.addEventListener("click", scrollStart);
+  document.addEventListener("scroll", updateSection);
+  document.addEventListener("scrollEnd", startHideTimer);
+  document.addEventListener("click", startShowTimer);
   document.addEventListener("mousemove", (event) =>
-    event.clientY < 200 ? scrollStart() : null
+    event.clientY < 200 ? startShowTimer() : null
   );
+
+  /**************************************
+   * Set active section
+   *************************************/
+
+  const setSectionActive = (element) => {
+    const elements = document.getElementsByTagName("li");
+    for (let li of elements) {
+      li.childNodes[0].classList.remove("active");
+    }
+    element.classList.add("active");
+  };
+
+  const aTagClickHandler = (event) => {
+    toggleNav();
+    console.log(event);
+    setSectionActive(event.target);
+    document.getElementById("section-display").innerHTML = sectionList.find(
+      (x) => `li-${x.id}` == event.target.parentNode.id
+    ).content;
+  };
 
   /**************************************
    * Hamburger for nav visibility toggle
@@ -192,6 +165,58 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("hamburger")
     .addEventListener("click", toggleHamburgerAnimation);
+
+  /**************************************
+   * Add Section helper class Nav list
+   * item and create section in main
+   * content
+   *************************************/
+  const addSection = () => {
+    /**************************************
+     * Get nav list item count
+     *************************************/
+
+    const sectionCount = document.getElementsByTagName("li").length;
+    sectionStyle.push({
+      backgroundColor:
+        colors[sectionCount > 4 ? sectionCount - 4 : sectionCount],
+    });
+
+    sectionList.push({
+      id: `section${sectionCount}`,
+      content: `Section ${sectionCount}`,
+    });
+
+    /**************************************
+     * Create DOM elements on initial load
+     * using the createElement module
+     *************************************/
+
+    createElement(document, "ul", {
+      tag: "li",
+      id: `li-section${sectionCount}`,
+      style: liStyle,
+    });
+    createElement(document, `#li-section${sectionCount}`, {
+      tag: "a",
+      content: `Section ${sectionCount}`,
+      href: `#section${sectionCount}`,
+      click: aTagClickHandler,
+      style: aStyle,
+    });
+    createElement(document, "main", {
+      tag: "section",
+      id: `section${sectionCount}`,
+      click: updateSection,
+      style: sectionStyle,
+    });
+
+    createElement(document, `#section${sectionCount}`, {
+      tag: "p",
+      content: defaultContent,
+    });
+    toggleNav();
+  };
 
   /**************************************
    * Create DOM elements on initial load
@@ -236,7 +261,7 @@ document.addEventListener("DOMContentLoaded", () => {
       tag: "a",
       content: index.content,
       href: `#${index.id}`,
-      click: liClickHandler,
+      click: aTagClickHandler,
       style: aStyle,
     });
 
@@ -251,6 +276,5 @@ document.addEventListener("DOMContentLoaded", () => {
       content: defaultContent,
     });
   }
-
   document.getElementById("hamburger").addEventListener("click", toggleNav);
 });
