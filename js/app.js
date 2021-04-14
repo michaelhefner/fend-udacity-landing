@@ -52,7 +52,6 @@ const showElements = (timeout) => {
 
 document.addEventListener("DOMContentLoaded", () => {
   let isMobileView = window.innerWidth < 768;
-  console.log(window.innerWidth);
 
   /******************************************************************
    * Toggle Navbar Visibility
@@ -104,7 +103,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.addEventListener("resize", (event) => {
     isMobileView = event.target.innerWidth < 768;
-    console.log(isMobileView);
     if (isMobileView) {
       document.addEventListener("scrollEnd", startHideTimer);
       document.addEventListener("click", startShowTimer);
