@@ -1,4 +1,14 @@
 # fend-udacity-landing
+A multi-section landing page that showcases the ability to use transitions, animations, scroll control, and event listening. 
+## Technologies
+* HTML5
+   * SVG
+* CSS3
+   * Media Queries
+* JavaScript
+   * Modules
+   * Functional Programming
+   * Even Driven
 ## Contents
 * A dynamic main navbar that has a toggle hamburger.
     * An "Add Section" button to add additional sections to the page with default content.
