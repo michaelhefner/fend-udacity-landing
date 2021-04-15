@@ -15,4 +15,7 @@
   header nav {
     display: flex;
   }
+  p {
+    max-width: 40%;
+}
 }
