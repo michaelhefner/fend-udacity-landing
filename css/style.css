@@ -28,7 +28,9 @@ button {
   display: block;
 }
 
-
+p {
+  max-width: 40%;
+}
 /**************************************
 *Header
 **************************************/
@@ -125,7 +127,9 @@ section {
   align-items: center;
   max-width: 100%;
 }
-
+section:nth-child(odd){
+  background: powderblue;
+}
 section p {
   margin: 30px;
   line-height: 2rem;
