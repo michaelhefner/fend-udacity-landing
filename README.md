@@ -5,6 +5,8 @@ A multi-section landing page that showcases the ability to use transitions, anim
    * SVG
 * CSS3
    * Media Queries
+   * Transitions
+   * Animations
 * JavaScript
    * Modules
    * Functional Programming
