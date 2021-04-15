@@ -100,9 +100,11 @@ document.addEventListener("DOMContentLoaded", () => {
   function startHideTimer() {
     hideTimer();
   }
+  document.addEventListener("scroll", updateSection);
 
   window.addEventListener("resize", (event) => {
     isMobileView = event.target.innerWidth < 768;
+
     if (isMobileView) {
       document.addEventListener("scrollEnd", startHideTimer);
       document.addEventListener("click", startShowTimer);
@@ -110,9 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
         event.clientY < 200 ? startShowTimer() : null
       );
       document.getElementById("navbar").style.display = "none";
-
     } else {
-      document.addEventListener("scroll", updateSection);
       document.getElementById("navbar").style.display = "flex";
     }
   });
@@ -132,6 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const aTagClickHandler = (event) => {
     toggleNav();
     setSectionActive(event.target);
+    document.getElementById(`section${event.target.id}`).scrollIntoView({behavior: "smooth"})
     document.getElementById("section-display").innerHTML = sectionList.find(
       (x) => `li-${x.id}` == event.target.parentNode.id
     ).content;
@@ -179,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
     createElement(document, `#li-section${sectionCount}`, {
       tag: "a",
       content: `Section ${sectionCount}`,
-      href: `#section${sectionCount}`,
+      id: `${sectionCount}`,
       click: aTagClickHandler,
     });
     createElement(document, "main", {
@@ -233,7 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
     createElement(document, `#li-${index.id}`, {
       tag: "a",
       content: index.content,
-      href: `#${index.id}`,
+      id: sectionList.findIndex(x=>x.id === index.id) + 1,
       click: aTagClickHandler,
     });
 
